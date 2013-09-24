@@ -1,6 +1,6 @@
 {
   "shell-version": ["3.8"],
-  "uuid": "welcome-to-gnomec@linux.intel.com",
+  "uuid": "welcome-to-gnome@linux.intel.com",
   "name": "Welcome to GNOME",
   "description": "First time UI tour"
 }
