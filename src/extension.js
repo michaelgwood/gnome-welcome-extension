@@ -63,11 +63,17 @@ function next ()
             else if (i == Area.APPLICATIONS)
               {
                 Main.overview.toggle ();
-                Main.overview.connect ("shown", Lang.bind (this, function ()
-                                                           {
-                                                             bubble.open (0);
-                                                             bubble.connect ("done", Lang.bind (this, function () { Main.overview.toggle (); }));
-                                                           }));
+                let shownID =
+                  Main.overview.connect ("shown", Lang.bind (this, function ()
+                    {
+                      bubble.open (0);
+                      Main.overview.disconnect (shownID);
+                      let doneId = bubble.connect ("done",
+                                                   Lang.bind (this, function ()
+                                                   {                                                                                 Main.overview.toggle ();
+                                                     bubble.disconnect (doneID);
+                                                   }));
+                    }));
                 return;
               }
             bubble.open (0);
@@ -77,6 +83,13 @@ function next ()
 
     /* everything done */
     global.log ("everything done");
+    this.destroy ();
+}
+
+function destroy ()
+{
+    for (let i=0; i < this.bubbles.length; i++)
+        delete this.bubbles[i];
 }
 
 function init ()
