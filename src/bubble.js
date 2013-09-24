@@ -76,14 +76,21 @@ const TextBubble = new Lang.Class ({
     open: function(timestamp) {
         this._positionToActor ();
         this.show ();
-        this._pushModal({ timestamp: timestamp });
-          /* animate in */
+        this._pushModal ({ timestamp: timestamp });
+
+        this.set_opacity (0);
+
+        Tweener.addTween(this,
+                         { opacity: 255,
+                           time: 0.1,
+                           transition: 'easeOutQuad'
+                         });
+
         return true;
     },
 
     close: function(timestamp) {
         this._popModal(timestamp);
-        this._savedKeyFocus = null;
         this.done = true;
 
         Tweener.addTween(this,
